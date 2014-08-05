@@ -6,6 +6,7 @@ import random
 class NextTuesday(object):
 	re_split = re.compile(r'(\s|\.\.\.|--)+')
 	re_sanitize = re.compile(r'^[\.\'",;!?&:<>{}()\[\]\s]+|[\.\'",;!?&:<>{}()\[\]\s]+$')
+	MIN_WORD_LENGTH = 4
 
 	def __init__(self, text=None):
 		self.next_words = {}
@@ -26,7 +27,11 @@ class NextTuesday(object):
 
 		prev = None
 		for word in words:
+			# Ignore empty words
 			if not word:
+				continue
+			# Ignore small words
+			if len(word) < self.MIN_WORD_LENGTH:
 				continue
 			if prev:
 				self.next_words.setdefault(prev, set()).add(word)
