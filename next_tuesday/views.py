@@ -5,7 +5,7 @@ class NextTuesdayView(TemplateView):
 	template_name = "nexttuesday.html"
 
 	def get_context_data(self, **kwargs):
-		context = super(NextTuesday, self).get_context_data(**kwargs)
+		context = super(NextTuesdayView, self).get_context_data(**kwargs)
 
 		phrase = settings.NEXT_TUESDAY_COMPILED.create_phrase()
 

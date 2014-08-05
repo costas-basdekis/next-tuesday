@@ -4,8 +4,8 @@ import random
 
 
 class NextTuesday(object):
-	re_split = re.compile(r'(\s|...|--)+')
-	re_sanitize = re.compile(r'^[\.,;?:<>{}()\[\]]+|[\.,;?:<>{}()\[\]]+$')
+	re_split = re.compile(r'(\s|\.\.\.|--)+')
+	re_sanitize = re.compile(r'^[\.\'",;!?&:<>{}()\[\]\s]+|[\.\'",;!?&:<>{}()\[\]\s]+$')
 
 	def __init__(self, text=None):
 		self.next_words = {}
@@ -18,7 +18,7 @@ class NextTuesday(object):
 		words = (
 			word
 			for words in (
-				self.re_sanitize.sub(' ', word)
+				self.re_sanitize.sub(' ', word.lower())
 				for word in self.re_split.split(text)
 			)
 			for word in words.split(' ')
@@ -26,10 +26,11 @@ class NextTuesday(object):
 
 		prev = None
 		for word in words:
+			if not word:
+				continue
 			if prev:
 				self.next_words.setdefault(prev, set()).add(word)
-			else:
-				prev = word
+			prev = word
 
 		for word in self.next_words:
 			letter = word[0]
@@ -39,14 +40,16 @@ class NextTuesday(object):
 		if not words:
 			return None
 
-		return words[random.randint(0, len(words))]
+		return words[random.randint(0, len(words) - 1)]
 
 	def get_random_word_beginning_with(self, letter):
 		words = self.words_beginning_with.get(letter)
 		return self.get_random_word(words)
 
 	def get_next_random_word_beginning_with(self, previous, letter):
-		words = set(self.next_words.get(previous, [])) & set(self.words_beginning_with.get(letter, []))
+		nexts = set(self.next_words.get(previous, []))
+		beginning = set(self.words_beginning_with.get(letter, []))
+		words = list(nexts & beginning)
 		return self.get_random_word(words)
 
 	def try_create_phrase(self, word):
