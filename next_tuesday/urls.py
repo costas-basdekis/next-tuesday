@@ -8,6 +8,7 @@ from . import views
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', views.NextTuesdayView.as_view(), name='home'),
+    url(r'^(?P<word>\w+)/$', views.NextTuesdayView.as_view(), name='home-word'),
     # url(r'^blog/', include('blog.urls')),
 
     #url(r'^admin/', include(admin.site.urls)),
