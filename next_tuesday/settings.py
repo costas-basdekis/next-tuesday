@@ -88,3 +88,12 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     BASE_DIR + '/templates/'
 )
+
+NEXT_TUESDAY_FILE = '/webapps/next-tuesday/next_tuesday/corpora/shakespeare.txt'
+
+from .nexttuesday import NextTuesday
+
+with open(NEXT_TUESDAY_FILE, 'rbU') as f:
+    text = f.read()
+
+NEXT_TUESDAY_COMPILED = NextTuesday(text)

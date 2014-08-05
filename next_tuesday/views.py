@@ -1,11 +1,14 @@
 from django.views.generic import TemplateView
+from django.conf import settings
 
-class NextTuesday(TemplateView):
+class NextTuesdayView(TemplateView):
 	template_name = "nexttuesday.html"
 
 	def get_context_data(self, **kwargs):
 		context = super(NextTuesday, self).get_context_data(**kwargs)
 
-		context['phrase'] = "I can't thing of anything"
+		phrase = settings.NEXT_TUESDAY_COMPILED.create_phrase()
+
+		context['phrase'] = phrase or "I can't thing of anything"
 
 		return context
