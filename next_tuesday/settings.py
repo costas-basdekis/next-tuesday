@@ -89,7 +89,7 @@ TEMPLATE_DIRS = (
     BASE_DIR + '/templates/'
 )
 
-NEXT_TUESDAY_FILE = '/webapps/next-tuesday/next_tuesday/corpora/shakespeare.txt'
+NEXT_TUESDAY_FILE = '/webapps/next-tuesday/next_tuesday/corpora/whereto.txt'
 
 from .nexttuesday import NextTuesday
 
