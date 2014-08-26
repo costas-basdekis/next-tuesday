@@ -76,8 +76,13 @@ class NextTuesday(object):
 
 		return ' '.join(words)
 
+	def random_phrase(self, word='cunt'):
+		return " ".join(map(self.get_random_word_beginning_with, word))
+
 	def create_phrase(self, word='cunt'):
-		for _ in xrange(50):
+		for _ in xrange(20):
 			phrase = self.try_create_phrase(word)
 			if phrase:
 				return phrase
+		return self.random_phrase(word)
+
